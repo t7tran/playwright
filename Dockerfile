@@ -14,7 +14,9 @@ USER node
 RUN mkdir -p /home/node/playwright && \
     cd /home/node/playwright && \
     npm init -y && \
-    npm install -D @playwright/test@1.55.0
+    npm install -D \
+        @playwright/test@1.55.0 \
+        js-yaml
 
 WORKDIR /home/node/playwright
 
