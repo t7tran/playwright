@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+import http from "http";
+import https from "https";
+import { URL } from "url";
+
+const target = process.argv[2];
+
+if (!target) {
+  console.error("Usage: ifup <url>");
+  process.exit(1);
+}
+
+try {
+  const url = new URL(target);
+  const client = url.protocol === "https:" ? https : http;
+
+  client
+    .get(url, (res) => {
+      res.on("data", () => 0);
+      res.on("end", () => {
+        if (!res.statusCode || res.statusCode < 200 || res.statusCode >= 300) {
+          process.stderr.write(`Request failed with status ${res.statusCode}\n`);
+          process.exit(1);
+        }
+      });
+    })
+    .on("error", (err) => {
+      process.stderr.write(`Error: ${err.message}\n`);
+      process.exit(1);
+    });
+} catch (err) {
+  process.stderr.write(`Invalid URL: ${err.message}\n`);
+  process.exit(1);
+}
