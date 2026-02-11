@@ -26,8 +26,8 @@ RUN \
         fonts-noto-cjk-extra \
         fonts-wqy-zenhei \
         fonts-wqy-microhei && \
-    npx -y playwright@1.58.1 install-deps && \
-    npx -y playwright@1.58.1 install chrome && \
+    npx -y playwright@1.58.2 install-deps && \
+    npx -y playwright@1.58.2 install chrome && \
     # cleanup
     apt clean && apt autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/*
 
@@ -37,7 +37,7 @@ RUN mkdir -p /home/node/playwright && \
     cd /home/node/playwright && \
     npm init -y && \
     npm install -D \
-        @playwright/test@1.58.1 \
+        @playwright/test@1.58.2 \
         js-yaml
 
 WORKDIR /home/node/playwright
